@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:OnboardingScreenUI.ViewModels"
+             xmlns:models="clr-namespace:OnboardingScreenUI.Models"
+             x:Class="OnboardingScreenUI.Views.IntroScreenView"
+             Shell.NavBarIsVisible="False"
+             x:DataType="viewModels:IntroScreenViewModel"
+             Title="IntroScreenView">
+    <Grid Margin="10" RowDefinitions="*,Auto">
+        <CarouselView Grid.Row="0" Position="{Binding Position}"
+                      IndicatorView="indicatorView" 
+                      Loop="False"
+                      HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                      ItemsSource="{Binding IntroScreens}">
+            <CarouselView.ItemTemplate>
+                <DataTemplate x:DataType="models:IntroScreenModel">
+                    <Grid RowDefinitions="60*,40*">
+                        <Image Source="{Binding IntroImage}" Aspect="AspectFit" Grid.Row="0" />
+
+                        <VerticalStackLayout Spacing="10" Grid.Row="1">
+                            <Label Text="{Binding IntroTitle}" FontSize="28" FontAttributes="Bold" />
+                            <Label Text="{Binding IntroDescription}" FontSize="20"  TextColor="Gray" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+        <StackLayout  Orientation="Horizontal"  
+                      Grid.Row="1" >
+            <IndicatorView x:Name="indicatorView" 
+                           VerticalOptions="Center"
+                           IndicatorSize="10"
+                           IndicatorColor="LightGray"  
+                           SelectedIndicatorColor="{x:StaticResource Primary}" />
+
+
+            <Frame 
+                HorizontalOptions="EndAndExpand"
+                Padding="0"
+                   CornerRadius="30"
+                    HeightRequest="60" 
+                   WidthRequest="60" 
+                   BackgroundColor="{x:StaticResource Primary}">
+                <Label Text="{Binding ButtonText}" TextColor="White" 
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center" 
+                       VerticalTextAlignment="Center" />
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NextCommand}" />
+                </Frame.GestureRecognizers>
+            </Frame>
+        </StackLayout>
+    </Grid>
+</ContentPage>
